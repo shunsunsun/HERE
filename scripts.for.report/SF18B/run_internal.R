@@ -1,5 +1,5 @@
 #' ---
-#' title: "SF13B summary"
+#' title: "SF18B summary"
 #' ---
 
 
@@ -31,24 +31,24 @@ site.recurrence.diff.to.plot.dt <- site.recurrence.comparison.dt[site.occurrence
 
 options(scipen = 999)
 
-SF13B.ggplot <- gghistogram(data=site.recurrence.diff.to.plot.dt, x="site.frequency.diff.to.plot", palette="npg") + labs(x="increase in site recurrence\nif discarding unsequenced sites per sample(%)", y="count of such editing sites\n(log10 scale)") + scale_y_log10() + geom_hline(yintercept=1000, color="red", linetype="dashed")
-SF13B.ggplot
+SF18B.ggplot <- gghistogram(data=site.recurrence.diff.to.plot.dt, x="site.frequency.diff.to.plot", palette="npg") + labs(x="increase in site recurrence\nif discarding unsequenced sites per sample(%)", y="count of such editing sites\n(log10 scale)") + scale_y_log10() + geom_hline(yintercept=1000, color="red", linetype="dashed")
+SF18B.ggplot
 
 
 
 
 
 
-saveRDS(SF13B.ggplot, snakemake@output[["main_ggplot_RDS_filename"]])
+saveRDS(SF18B.ggplot, snakemake@output[["main_ggplot_RDS_filename"]])
 
 if (FALSE){
-    saveRDS(SF13B.ggplot, "report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF13B.ggplot.RDS")
+    saveRDS(SF18B.ggplot, "report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF18B.ggplot.RDS")
 }
 
-ggsave.A4(filename=snakemake@output[["main_png_filename"]], plot=SF13B.ggplot, width.r=0.9, height.r=0.3)
+ggsave.A4(filename=snakemake@output[["main_png_filename"]], plot=SF18B.ggplot, width.r=0.9, height.r=0.3)
 if (FALSE){
-    ggsave.A4(filename="report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF13B.png", plot=SF13B.ggplot, width.r=0.9, height.r=0.3)
+    ggsave.A4(filename="report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF18B.png", plot=SF18B.ggplot, width.r=0.9, height.r=0.3)
 }
 
 
-print(SF13B.ggplot)
+print(SF18B.ggplot)

@@ -298,39 +298,66 @@ rule F4C:
         "./scripts.for.report/F4C/run.R"
 
 
+rule F5ABDE_and_SF13_SF14_SF15_SF16_ST4:
+    input:
+        ALS_subset_recurrent_edits_only_with_snpEff_annotation_on_valid_genes_only_dt_txt_gz_filename="result/A02_3__check_recurrence_profile_for_a_subset_of_samples/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/all.normal.samples/subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt.txt.gz",
+        subset_recurrent_edits_only_with_snpEff_annotation_on_valid_genes_only_dt_txt_gz_filename="result/A02_3__check_recurrence_profile_for_a_subset_of_samples/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt.txt.gz",
+        subset_site_recurrence_comparison_CJ_dt_txt_gz_filename="result/A02_3__check_recurrence_profile_for_a_subset_of_samples/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/subset.site.recurrence.comparison.CJ.dt.txt.gz",
+        subset_dt_txt_gz_filename="result/A02_3__check_recurrence_profile_for_a_subset_of_samples/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/subset.dt.txt.gz",
+        phenotype_output_at_gsm_level_dt_filename="result/S21_1__merge_phenotype_tables/{DATASET_PHENOTYPE_COLLECTION_NAME}/phenotype.output.at.gsm.level.dt.txt"
+    output:
+        flag=touch("report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5ABDE.and.SF13.SF14.SF15.SF16.ST4.finished"),
+        summary_html_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5ABDE.and.SF13.SF14.SF15.SF16.ST4.summary.html",
+        F5A_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5A.png",
+        F5B_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5B.png",
+        F5D_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5D.png",
+        F5E_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/F5E.png",
+        SF13_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13.png",
+        SF14_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF14.png",
+        SF15_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF15.png",
+        SF16_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF16.png",
+        ST4_csv_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/ST4.csv"
+    params:
+        result_directory="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/"
+    threads:
+        1
+    script:
+        "./scripts.for.report/F5ABDE.and.SF13.SF14.SF15.SF16.ST4/run.R"
 
-rule SF13A:
+
+
+rule SF18A:
     input:
         flag_S52_3="result/S52_3__mark_unsequenced_editing_sites/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/finished",
         merged_long_disjoint_with_population_without_potential_polymorphism_with_enough_read_support_with_phenotype_sequenced_samples_only_with_enough_sample_support_A_to_G_only_merged_with_coverage_dt_txt_gz_filename="result/S52_3__mark_unsequenced_editing_sites/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt.txt.gz"
     output:
-        flag=touch("report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13A.finished"),
-        summary_html_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13A.summary.html",
+        flag=touch("report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18A.finished"),
+        summary_html_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18A.summary.html",
         edit_and_sample_unsequenced_status_dt_txt_gz_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/edit.and.sample.unsequenced.status.dt.txt.gz",
         edit_and_sample_unsequenced_status_edit_histogram_per_sample_group_dt_txt_gz_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/edit.and.sample.unsequenced.status.edit.histogram.per.sample.group.dt.txt.gz",
-        main_ggplot_RDS_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13A.ggplot.RDS",
-        main_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13A.png"
+        main_ggplot_RDS_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18A.ggplot.RDS",
+        main_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18A.png"
     params:
         result_directory="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/"
     threads:
         config["large_data_threads"]
     script:
-        "./scripts.for.report/SF13A/run.R"
+        "./scripts.for.report/SF18A/run.R"
 
 
-rule SF13B:
+rule SF18B:
     input:
         flag_S52_3="result/S52_3__mark_unsequenced_editing_sites/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/finished",
         merged_long_disjoint_with_population_without_potential_polymorphism_with_enough_read_support_with_phenotype_sequenced_samples_only_with_enough_sample_support_A_to_G_only_merged_with_coverage_dt_txt_gz_filename="result/S52_3__mark_unsequenced_editing_sites/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt.txt.gz"
     output:
-        flag=touch("report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13B.finished"),
-        summary_html_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13B.summary.html",
+        flag=touch("report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18B.finished"),
+        summary_html_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18B.summary.html",
         site_recurrence_comparison_dt_txt_gz_filename="result/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/site.recurrence.comparison.dt.txt.gz",
-        main_ggplot_RDS_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13B.ggplot.RDS",
-        main_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF13B.png"
+        main_ggplot_RDS_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18B.ggplot.RDS",
+        main_png_filename="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/SF18B.png"
     params:
         result_directory="report/{DATASET_COLLECTION_NAME}/{DATASET_PHENOTYPE_COLLECTION_NAME}/{SUBSET_NAME}/"
     threads:
         config["large_data_threads"]
     script:
-        "./scripts.for.report/SF13B/run.R"
+        "./scripts.for.report/SF18B/run.R"

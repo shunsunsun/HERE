@@ -5,16 +5,30 @@ source("./scripts/common/logger.R")
 merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt <- fread(snakemake@input[["merged_long_disjoint_with_population_without_potential_polymorphism_with_enough_read_support_with_phenotype_sequenced_samples_only_with_enough_sample_support_A_to_G_only_merged_with_coverage_dt_txt_gz_filename"]])
 
 if (FALSE){
-    merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt <- fread("result/S52_2__concatenate_all_variant_coverages_of_merged_bam/201218-fifth-dataset/201221-fifth-phenotype-collection/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt.txt.gz")
+    merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt <- fread("result/S52_3__mark_unsequenced_editing_sites/210215-sixth-dataset/201221-fifth-phenotype-collection/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt.txt.gz")
 }
+
+#### 20210622 test
+## merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt
+## GSE133854 uniparental disomy
+## GSE65481 (zygote viability good/bad prediction)
+## ICM v.s. hESC (customized) v.s. hESC(long-term cell line; can be extracted from all.normal.samples)
+## post-implantation, developmental day (focus on individual recurrent edits with abnormally high signals; can be extracted from all.normal.samples)
+## GSE95477 (oocyte age)
+## GSE101571 amanitin
+## GSE100118 (blastocyst OCT4 CRISPR knockdown)
+
+
+## phenotype.dt <- fread("result/S21_1__merge_phenotype_tables/201221-fifth-phenotype-collection/phenotype.output.at.gsm.level.dt.txt")
+#### END of 20210622 test
 
 subset.name <- snakemake@wildcards[['SUBSET_NAME']]
 
 if (FALSE){
     subset.name <- "all.normal.samples"
-    subset.name <- "normal.samples.from.the.largest.two.datasets.from.two.labs"
     subset.name <- "GSE133854.all"
     subset.name <- "GSE100118.all.and.all.normal.blastocysts"
+    subset.name <- "GSE95477.all"
 }
 
 report.expr(merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt %>% dim)
@@ -31,6 +45,12 @@ if (subset.name == "all.normal.samples"){
     subset.dt <- merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt[gse=="GSE133854"]
     subset.dt[, group:=paste(sep="", stage, "@", disease)]
     subset.dt[disease %in% c("", NA) == TRUE, group:=paste(sep="", stage, "@", "biparental")]
+} else if (subset.name == "GSE65481.all"){
+    subset.dt <- merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt[gse=="GSE65481"]
+    subset.dt[, group:=paste(sep="", stage, "@", disease)]
+} else if (subset.name == "GSE95477.all"){
+    subset.dt <- merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt[gse=="GSE95477"]
+    subset.dt[, group:=paste(sep="", stage, "@", maternal.age>=35)]
 } else if (subset.name == "GSE100118.all.and.all.normal.blastocysts"){
     subset.dt <- merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.merged.with.coverage.dt[gse=="GSE100118" | (is.normal==TRUE & grepl("blastocyst", stage))]
     subset.dt[, group:="none"]
@@ -50,7 +70,7 @@ if (is.null(subset.dt) == TRUE){
 ## 1. subset.dt
 fwrite(subset.dt, snakemake@output[["subset_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.dt.txt.gz")
+    fwrite(subset.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.dt.txt.gz"))
 }
 
 ## 2. recurrence profile (for F2A)
@@ -62,7 +82,7 @@ subset.site.recurrence.comparison.dt <- subset.dt %>%
 
 fwrite(subset.site.recurrence.comparison.dt, snakemake@output[["subset_site_recurrence_comparison_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.site.recurrence.comparison.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.site.recurrence.comparison.dt.txt.gz")
+    fwrite(subset.site.recurrence.comparison.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.site.recurrence.comparison.dt.txt.gz"))
 }
 
 ## 3. recurrent edits (site + group only; for F2B)
@@ -78,12 +98,16 @@ if (subset.name == 'all.normal.samples'){
            (grepl('(8-cell|morula)', group) == TRUE & site.occurrence.for.this.group >= 10), ]}
 } else if (subset.name == 'GSE100118.all.and.all.normal.blastocysts'){
     subset.site.recurrence.comparison.recurrent.edits.only.dt <- subset.site.recurrence.comparison.dt[site.occurrence.for.this.group >= 10]
+} else if (subset.name == 'GSE65481.all'){
+    subset.site.recurrence.comparison.recurrent.edits.only.dt <- subset.site.recurrence.comparison.dt[site.occurrence.for.this.group >= 10]
+} else if (subset.name == 'GSE95477.all'){
+    subset.site.recurrence.comparison.recurrent.edits.only.dt <- subset.site.recurrence.comparison.dt[site.occurrence.for.this.group >= 4]
 }
 
 
 fwrite(subset.site.recurrence.comparison.recurrent.edits.only.dt, snakemake@output[["subset_site_recurrence_comparison_recurrent_edits_only_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.site.recurrence.comparison.recurrent.edits.only.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.site.recurrence.comparison.recurrent.edits.only.dt.txt.gz")
+    fwrite(subset.site.recurrence.comparison.recurrent.edits.only.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.site.recurrence.comparison.recurrent.edits.only.dt.txt.gz"))
 }
 
 ## 4. subset.dt with recurrent edits only (for supp. fig. of F2B; F2D and supp. fig. of F2D (preprocessing) -- per-dataset distribution)
@@ -93,7 +117,7 @@ subset.recurrent.edits.only.dt <- merge(x=subset.dt, y=subset.site.recurrence.co
 
 fwrite(subset.recurrent.edits.only.dt, snakemake@output[["subset_recurrent_edits_only_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.recurrent.edits.only.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.recurrent.edits.only.dt.txt.gz")
+    fwrite(subset.recurrent.edits.only.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.recurrent.edits.only.dt.txt.gz"))
 }
 
 ## 5. subset.dt with recurrence comparison info (for F2C and its supp.)
@@ -111,7 +135,7 @@ subset.site.recurrence.comparison.CJ.dt <- subset.site.recurrence.comparison.dt 
 
 fwrite(subset.site.recurrence.comparison.CJ.dt, snakemake@output[["subset_site_recurrence_comparison_CJ_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.site.recurrence.comparison.CJ.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.site.recurrence.comparison.CJ.dt.txt.gz")
+    fwrite(subset.site.recurrence.comparison.CJ.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.site.recurrence.comparison.CJ.dt.txt.gz"))
 }
 
 ## 6. subset.dt with recurrent edits only plus gene annotations (for F2E and supp. fig. of F2E)
@@ -122,7 +146,7 @@ if (FALSE){
 merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt <- fread(snakemake@input[["merged_long_disjoint_with_population_without_potential_polymorphism_with_enough_read_support_with_phenotype_sequenced_samples_only_with_enough_sample_support_A_to_G_only_variant_only_snpEff_annotation_dt_txt_gz_filename"]])
 
 if (FALSE) {
-    merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt <- fread("result/S51_6__get_snpEff_annotation_subset_of_filtered_result/201218-fifth-dataset/201221-fifth-phenotype-collection/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt.txt.gz")
+    merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt <- fread("result/S51_6__get_snpEff_annotation_subset_of_filtered_result/210215-sixth-dataset/201221-fifth-phenotype-collection/merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt.txt.gz")
 }
 
 snpEff.annotation.for.subset.recurrent.edits.dt <- merge(
@@ -132,7 +156,7 @@ snpEff.annotation.for.subset.recurrent.edits.dt <- merge(
 
 fwrite(snpEff.annotation.for.subset.recurrent.edits.dt, snakemake@output[["snpEff_annotation_for_subset_recurrent_edits_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(snpEff.annotation.for.subset.recurrent.edits.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/snpEff.annotation.for.subset.recurrent.edits.dt.txt.gz")
+    fwrite(snpEff.annotation.for.subset.recurrent.edits.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/snpEff.annotation.for.subset.recurrent.edits.dt.txt.gz"))
 }
 
 ## 6.1.2. valid subsetted sites, transcript level
@@ -143,7 +167,7 @@ snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt <- snpEff.a
 
 fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt, snakemake@output[["snpEff_annotation_for_subset_recurrent_edits_on_valid_transcripts_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt.txt.gz")
+    fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/snpEff.annotation.for.subset.recurrent.edits.on.valid.transcripts.dt.txt.gz"))
 }
 
 
@@ -179,7 +203,7 @@ if (FALSE) {
 
 fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.genes.dt, snakemake@output[["snpEff_annotation_for_subset_recurrent_edits_on_valid_genes_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.genes.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/snpEff.annotation.for.subset.recurrent.edits.on.valid.genes.dt.txt.gz")
+    fwrite(snpEff.annotation.for.subset.recurrent.edits.on.valid.genes.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/snpEff.annotation.for.subset.recurrent.edits.on.valid.genes.dt.txt.gz"))
 }
 
 
@@ -220,5 +244,22 @@ if (FALSE) {
 
 fwrite(subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt, snakemake@output[["subset_recurrent_edits_only_with_snpEff_annotation_on_valid_genes_only_dt_txt_gz_filename"]])
 if (FALSE){
-    fwrite(subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt, "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/201218-fifth-dataset/201221-fifth-phenotype-collection/all.normal.samples/subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt.txt.gz")
+    fwrite(subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/subset.recurrent.edits.only.with.snpEff.annotation.on.valid.genes.only.dt.txt.gz"))
 }
+
+
+
+## 7. subset.dt plus gene annotations (for sample-level comparison plot)
+
+#### 7.1. all subsetted sites
+
+snpEff.annotation.for.subset.dt <- merge(
+    x=subset.dt,
+    y=merged.long.disjoint.with.population.without.potential.polymorphism.with.enough.read.support.with.phenotype.sequenced.samples.only.with.enough.sample.support.A.to.G.only.variant.only.snpEff.annotation.dt[, list(CHROM, POS, Annotation, Annotation_Impact, Gene_Name, Gene_ID, Feature_Type, Feature_ID, Transcript_BioType, Rank, HGVS.c, HGVS.p, `cDNA.pos / cDNA.length`, `CDS.pos / CDS.length`, `AA.pos / AA.length`, Distance, `ERRORS / WARNINGS / INFO`, event)],
+    by=c("CHROM", "POS"), all.x=FALSE, all.y=FALSE, allow.cartesian=TRUE)
+
+fwrite(snpEff.annotation.for.subset.dt, snakemake@output[["snpEff_annotation_for_subset_dt_txt_gz_filename"]])
+if (FALSE){
+    fwrite(snpEff.annotation.for.subset.dt, paste(sep="", "result/A02_3__check_recurrence_profile_for_a_subset_of_samples/210215-sixth-dataset/201221-fifth-phenotype-collection/", subset.name, "/snpEff.annotation.for.subset.dt.txt.gz"))
+}
+

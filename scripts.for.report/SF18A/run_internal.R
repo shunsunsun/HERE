@@ -1,5 +1,5 @@
 #' ---
-#' title: "SF13A summary"
+#' title: "SF18A summary"
 #' ---
 
 library("data.table")
@@ -44,23 +44,23 @@ edit.and.sample.unsequenced.status.edit.histogram.per.sample.group.to.plot.dt <-
 
 ## simple percentage distribution plot
 
-SF13A.ggplot <- ggbarplot(data=edit.and.sample.unsequenced.status.edit.histogram.per.sample.group.to.plot.dt[is.normal==TRUE & percentage.of.unsequenced.samples.for.this.sample.group.discretized=="[0.9,1)"], x="stage.description.ordered", y="count.of.editing.sites", palette="npg")  +
+SF18A.ggplot <- ggbarplot(data=edit.and.sample.unsequenced.status.edit.histogram.per.sample.group.to.plot.dt[is.normal==TRUE & percentage.of.unsequenced.samples.for.this.sample.group.discretized=="[0.9,1)"], x="stage.description.ordered", y="count.of.editing.sites", palette="npg")  +
     labs(x="stage", y="count of editing sites detected in >=1\nbut unsequenced in >= 90% normal samples") +
     theme(axis.text.x=element_text(angle=45, hjust=1))
-SF13A.ggplot
+SF18A.ggplot
 
 
 
-saveRDS(SF13A.ggplot, snakemake@output[["main_ggplot_RDS_filename"]])
+saveRDS(SF18A.ggplot, snakemake@output[["main_ggplot_RDS_filename"]])
 
 if (FALSE){
-    saveRDS(SF13A.ggplot, "report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF13A.ggplot.RDS")
+    saveRDS(SF18A.ggplot, "report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF18A.ggplot.RDS")
 }
 
-ggsave.A4(filename=snakemake@output[["main_png_filename"]], plot=SF13A.ggplot, width.r=0.9, height.r=0.45)
+ggsave.A4(filename=snakemake@output[["main_png_filename"]], plot=SF18A.ggplot, width.r=0.9, height.r=0.45)
 if (FALSE){
-    ggsave.A4(filename="report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF13A.png", plot=SF13A.ggplot, width.r=0.9, height.r=0.45)
+    ggsave.A4(filename="report/210215-sixth-dataset/201221-fifth-phenotype-collection/all.normal.samples/SF18A.png", plot=SF18A.ggplot, width.r=0.9, height.r=0.45)
 }
 
 
-print(SF13A.ggplot)
+print(SF18A.ggplot)
