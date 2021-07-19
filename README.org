@@ -246,7 +246,7 @@ Prepare the UCSC track files using Table Browser ([[https://www.genome.ucsc.edu/
 | dbSNP cDNA-flagged             | Variation                  | Flagged SNPs (151) | molType does match cDNA            | BED           | ~external/UCSC.Table.Browser.dbSNP/151/flagged.cDNA.only/dbSNP.bed~                 |
 | Alu repeats                    | Repeats                    | RepeatMasker       | repFamily does match Alu           | BED           | ~external/UCSC.Table.Browser.repeatmasker/repFamily.Alu/repeatmasker.bed~           |
 | Simple repeats                 | Repeats                    | RepeatMasker       | repFamily does match Simple_repeat | BED           | ~external/UCSC.Table.Browser.repeatmasker/repFamily.Simple_repeat/repeatmasker.bed~ |
-| Non-Alu repeats                | Repeats                    | RepeatMasker       | repFamily does match Alu           | BED           | ~external/UCSC.Table.Browser.repeatmasker/repFamily.Alu/repeatmasker.bed~           |
+| Non-Alu repeats                | Repeats                    | RepeatMasker       | repFamily does NOT match Alu       | BED           | ~external/UCSC.Table.Browser.repeatmasker/repFamily.not.Alu/repeatmasker.bed~       |
 
 
 *** Genomic VCF files from worldwide cohort studies
