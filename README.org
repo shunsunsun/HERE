@@ -231,8 +231,8 @@ wget -P external/contigs/ ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_huma
 mkdir -p external/dbSNP.vcf/151/common_all/
 wget -P external/dbSNP.vcf/151/common_all/  https://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606/VCF/00-common_all.vcf.gz
 wget -P external/dbSNP.vcf/151/common_all/  https://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606/VCF/00-common_all.vcf.gz.tbi
-ln -s external/dbSNP.vcf/151/common_all/00-common_all.vcf.gz external/dbSNP.vcf/151/common_all/dbSNP.vcf.gz
-ln -s external/dbSNP.vcf/151/common_all/00-common_all.vcf.gz.tbi external/dbSNP.vcf/151/common_all/dbSNP.vcf.gz.tbi
+ln -s -r external/dbSNP.vcf/151/common_all/00-common_all.vcf.gz external/dbSNP.vcf/151/common_all/dbSNP.vcf.gz
+ln -s -r external/dbSNP.vcf/151/common_all/00-common_all.vcf.gz.tbi external/dbSNP.vcf/151/common_all/dbSNP.vcf.gz.tbi
 #+END_SRC
 
 
